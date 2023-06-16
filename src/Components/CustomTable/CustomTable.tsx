@@ -2,21 +2,14 @@ import { useEffect,useState } from 'react';
 import { Table } from 'react-bootstrap';
 import { IProduct } from '../../Interfaces/IProduct';
 import { getAllProductsUrl } from '../../utils/apiUrls';
+import CustomPagination from '../CustomPagination/CustomPagination';
 import TableRow from '../TableRow/TableRow';
 import './CustomTable.css';
 
 const tableHeaders = ['SL','Name','Rating','Price','Action'];
 const productsPerPage = 5;
 
-/**
- *  const indexOfLastPost   = this.state.currentPage * postsPerPage;
-    const indexOfFirstPost  = indexOfLastPost - postsPerPage;
-    const currentPosts      = this.state.posts.slice(indexOfFirstPost, indexOfLastPost);
- */
-
 const CustomTable = () => {
-  // const [tableHeaders] = useState(['SL','Name','Rating','Price','Action']);
-
   const [allProducts,setAllProducts] = useState<IProduct[]>([])
   const [currentPage,setCurrentPage] = useState<number>(1)
   const [currentPageProducts,setCurrentPageProducts] = useState<IProduct[]>([])
@@ -30,20 +23,12 @@ const CustomTable = () => {
   }, [])
 
   useEffect(() => {
-    console.clear();
-    console.log('allProducts:',allProducts)
-
     const indexOfLastProduct   = currentPage * productsPerPage; // 5
     const indexOfFirstProduct  = indexOfLastProduct - productsPerPage; // 0
     const currentProducts      = allProducts.slice(indexOfFirstProduct, indexOfLastProduct);
     setCurrentPageProducts(currentProducts);
 
-  }, [allProducts])
-
-  useEffect(() => {
-    console.log('currentPageProducts:',currentPageProducts)
-  
-  }, [currentPageProducts])
+  }, [allProducts,currentPage])
   
 
   return (
@@ -70,7 +55,12 @@ const CustomTable = () => {
           }
         </tbody>
       </Table>
-      
+
+      <CustomPagination 
+        totalPages = {Math.ceil(allProducts.length/productsPerPage)}
+        currentPage = {currentPage}
+        setCurrentPage = {setCurrentPage}
+      />
     </div>
   );
 };
