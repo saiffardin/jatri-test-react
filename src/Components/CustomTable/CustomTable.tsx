@@ -41,7 +41,13 @@ const CustomTable = () => {
       </div>
 
       
-      <Table responsive="lg" className='main-table '>
+      <Table 
+        className='main-table' 
+        responsive="lg" 
+        bordered
+        hover
+        
+      >
         <thead>
           <tr>
             {tableHeaders.map((header,indx)=><th key={indx}>{header}</th>)}
