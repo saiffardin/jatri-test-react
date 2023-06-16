@@ -1,28 +1,29 @@
-import { useState } from 'react';
+import { useEffect,useState } from 'react';
 import { Table } from 'react-bootstrap';
+import { IProduct } from '../../Interfaces/IProduct';
+import { getAllProductsUrl } from '../../utils/apiUrls';
+import TableRow from '../TableRow/TableRow';
 import './CustomTable.css';
 
+const tableHeaders = ['SL','Name','Rating','Price','Action'];
+
 const CustomTable = () => {
-  const [tableHeaders] = useState(['SL','Name','Rating','Price','Action']);
-  const [products] = useState({
-    "id": 1,
-    "title": "iPhone 9",
-    "description": "An apple mobile which is nothing like apple",
-    "price": 549,
-    "discountPercentage": 12.96,
-    "rating": 4.69,
-    "stock": 94,
-    "brand": "Apple",
-    "category": "smartphones",
-    "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
-    "images": [
-        "https://i.dummyjson.com/data/products/1/1.jpg",
-        "https://i.dummyjson.com/data/products/1/2.jpg",
-        "https://i.dummyjson.com/data/products/1/3.jpg",
-        "https://i.dummyjson.com/data/products/1/4.jpg",
-        "https://i.dummyjson.com/data/products/1/thumbnail.jpg"
-    ]
-})
+  // const [tableHeaders] = useState(['SL','Name','Rating','Price','Action']);
+
+  const [products,setProducts] = useState<IProduct[]>([])
+
+  useEffect(() => {
+    fetch(getAllProductsUrl())
+      .then(res=>res.json())
+      .then(data=> setProducts(data.products))
+  
+  }, [])
+
+  useEffect(() => {
+    // console.clear();
+    console.log('products:',products)
+  }, [products])
+  
 
   return (
     // align-items-center
@@ -34,39 +35,18 @@ const CustomTable = () => {
       </div>
 
       
-      <Table responsive="lg" className='main-table text-center'>
+      <Table responsive="lg" className='main-table '>
         <thead>
           <tr>
             {tableHeaders.map((header,indx)=><th key={indx}>{header}</th>)}
           </tr>
         </thead>
-        
-        <tbody>
-          <tr>
-            <td>{products.id}</td>
-            <td>{products.title}</td>
-            <td>{products.rating}</td>
-            <td>{products.price}</td>
-            <td>Show Button</td>
-            
-            
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Table cell</td>
-            <td>Table cell</td>
-            <td>Table cell</td>
-            <td>Table cell</td>
+         
           
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Table cell</td>
-            <td>Table cell</td>
-            <td>Table cell</td>
-            <td>Table cell</td>
-            
-          </tr>
+        <tbody>
+          {
+            products.map(product=> <TableRow key={product.id} product={product}/>)
+          }
         </tbody>
       </Table>
       

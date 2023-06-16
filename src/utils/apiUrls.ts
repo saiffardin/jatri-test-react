@@ -1,0 +1,1 @@
+export const getAllProductsUrl = () => 'https://dummyjson.com/products';
