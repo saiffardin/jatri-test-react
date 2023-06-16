@@ -1,10 +1,11 @@
 import './App.css'
+import CustomTable from './Components/CustomTable/CustomTable'
 
 function App() {
   
   return (
     <>
-      <h1>Saif Says Hii</h1>
+      <CustomTable/>
     </>
   )
 }
