@@ -6,23 +6,44 @@ import TableRow from '../TableRow/TableRow';
 import './CustomTable.css';
 
 const tableHeaders = ['SL','Name','Rating','Price','Action'];
+const productsPerPage = 5;
+
+/**
+ *  const indexOfLastPost   = this.state.currentPage * postsPerPage;
+    const indexOfFirstPost  = indexOfLastPost - postsPerPage;
+    const currentPosts      = this.state.posts.slice(indexOfFirstPost, indexOfLastPost);
+ */
 
 const CustomTable = () => {
   // const [tableHeaders] = useState(['SL','Name','Rating','Price','Action']);
 
-  const [products,setProducts] = useState<IProduct[]>([])
+  const [allProducts,setAllProducts] = useState<IProduct[]>([])
+  const [currentPage,setCurrentPage] = useState<number>(1)
+  const [currentPageProducts,setCurrentPageProducts] = useState<IProduct[]>([])
+
 
   useEffect(() => {
     fetch(getAllProductsUrl())
       .then(res=>res.json())
-      .then(data=> setProducts(data.products))
+      .then(data=> setAllProducts(data.products))
   
   }, [])
 
   useEffect(() => {
-    // console.clear();
-    console.log('products:',products)
-  }, [products])
+    console.clear();
+    console.log('allProducts:',allProducts)
+
+    const indexOfLastProduct   = currentPage * productsPerPage; // 5
+    const indexOfFirstProduct  = indexOfLastProduct - productsPerPage; // 0
+    const currentProducts      = allProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+    setCurrentPageProducts(currentProducts);
+
+  }, [allProducts])
+
+  useEffect(() => {
+    console.log('currentPageProducts:',currentPageProducts)
+  
+  }, [currentPageProducts])
   
 
   return (
@@ -45,7 +66,7 @@ const CustomTable = () => {
           
         <tbody>
           {
-            products.map(product=> <TableRow key={product.id} product={product}/>)
+            currentPageProducts.map(product=> <TableRow key={product.id} product={product}/>)
           }
         </tbody>
       </Table>
