@@ -3,11 +3,14 @@ import { Table } from 'react-bootstrap';
 import { IProduct } from '../../Interfaces/IProduct';
 import { getAllProductsUrl } from '../../utils/apiUrls';
 import CustomPagination from '../CustomPagination/CustomPagination';
+import FilterTable from '../FilterTable/FilterTable';
 import TableRow from '../TableRow/TableRow';
 import './CustomTable.css';
 
 const tableHeaders = ['SL','Name','Rating','Price','Action'];
 const productsPerPage = 5;
+const filterPriceCol = 'price';
+const filterRatingCol = 'rating';
 
 const CustomTable = () => {
   const [allProducts,setAllProducts] = useState<IProduct[]>([])
@@ -26,6 +29,10 @@ const CustomTable = () => {
     const indexOfLastProduct   = currentPage * productsPerPage; // 5
     const indexOfFirstProduct  = indexOfLastProduct - productsPerPage; // 0
     const currentProducts      = allProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+    console.log('%c=================','color:yellow')
+    console.log('indexOfLastProduct:',indexOfLastProduct)
+    console.log('indexOfFirstProduct:',indexOfFirstProduct)
+    console.log('currentProducts:',currentProducts)
     setCurrentPageProducts(currentProducts);
 
   }, [allProducts,currentPage])
@@ -34,11 +41,9 @@ const CustomTable = () => {
   return (
     // align-items-center
     // 
-    <div className='table-parent d-flex align-items-center flex-column'>
-      <div className='table-filter'>
-        <h1>Inside CustomTable</h1>
-
-      </div>
+    <div className='m-2 table-parent d-flex align-items-center flex-column '>
+      <FilterTable allProducts={allProducts} setAllProducts={setAllProducts} setCurrentPage={setCurrentPage} filterColumn={filterPriceCol} />
+      {/* <FilterTable allProducts={allProducts} setAllProducts={setAllProducts} filterColumn={filterRatingCol} /> */}
 
       
       <Table 
