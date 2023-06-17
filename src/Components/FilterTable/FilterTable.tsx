@@ -1,4 +1,4 @@
-import { useEffect,useState } from 'react';
+import { useState } from 'react';
 import { Dropdown,DropdownButton } from 'react-bootstrap';
 import { IProduct } from '../../Interfaces/IProduct';
 import './FilterTable.css';
@@ -7,14 +7,14 @@ interface IFilterTableProps {
   allProducts:IProduct[];
   setAllProducts : React.Dispatch<React.SetStateAction<IProduct[]>>;
   filterColumn:keyof IProduct;
-  setCurrentPage :any
+ 
 }
 
 const DEFAULT ='Default';
 const ASCENDING ='Ascending';
 const DESCENDING='Descending';
 
-const FilterTable = ({allProducts,setAllProducts,filterColumn,setCurrentPage}:IFilterTableProps) => {
+const FilterTable = ({allProducts,setAllProducts,filterColumn}:IFilterTableProps) => {
   const [filter,setFilter] = useState(DEFAULT);
 
   const dropDownHandler = (eventKey:string|null) => {
@@ -44,11 +44,6 @@ const FilterTable = ({allProducts,setAllProducts,filterColumn,setCurrentPage}:IF
         return allProducts.sort((a, b) => (a['id'] as number) - (b['id'] as number));
     }
   }
-
-  // useEffect(() => {
-  //   console.log('%c----------------allProducts:','color:cyan',allProducts)
-  // }, [allProducts])
-  
 
   return (
     <div className="filter-table d-flex">

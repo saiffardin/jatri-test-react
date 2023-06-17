@@ -41,37 +41,41 @@ const CustomTable = () => {
   return (
     // align-items-center
     // 
-    <div className='m-2 table-parent d-flex align-items-center flex-column '>
-      <FilterTable allProducts={allProducts} setAllProducts={setAllProducts} setCurrentPage={setCurrentPage} filterColumn={filterPriceCol} />
-      {/* <FilterTable allProducts={allProducts} setAllProducts={setAllProducts} filterColumn={filterRatingCol} /> */}
+    <div className='m-2 d-flex align-items-center flex-column'>
 
-      
-      <Table 
-        className='main-table' 
-        responsive="lg" 
-        bordered
-        hover
-        
-      >
-        <thead>
-          <tr>
-            {tableHeaders.map((header,indx)=><th key={indx}>{header}</th>)}
-          </tr>
-        </thead>
-         
+      <div className='table-parent'>
+        <div className='d-flex justify-content-end' >
+          <FilterTable allProducts={allProducts} setAllProducts={setAllProducts} filterColumn={filterPriceCol} />
+          <div className='mx-4'></div>
+          <FilterTable allProducts={allProducts} setAllProducts={setAllProducts} filterColumn={filterRatingCol}/>
+        </div>
+
+        <Table 
+          className='main-table' 
+          responsive="lg" 
+          bordered
+          hover  
+        >
+          <thead>
+            <tr>
+              {tableHeaders.map((header,indx)=><th key={indx}>{header}</th>)}
+            </tr>
+          </thead>
           
-        <tbody>
-          {
-            currentPageProducts.map(product=> <TableRow key={product.id} product={product}/>)
-          }
-        </tbody>
-      </Table>
+          <tbody>
+            {
+              currentPageProducts.map(product=> <TableRow key={product.id} product={product}/>)
+            }
+          </tbody>
+        </Table>  
+      </div>
 
       <CustomPagination 
-        totalPages = {Math.ceil(allProducts.length/productsPerPage)}
-        currentPage = {currentPage}
-        setCurrentPage = {setCurrentPage}
-      />
+          totalPages = {Math.ceil(allProducts.length/productsPerPage)}
+          currentPage = {currentPage}
+          setCurrentPage = {setCurrentPage}
+        />
+      
     </div>
   );
 };
