@@ -23,7 +23,7 @@ const TableRow = ({product}:ITableRowProps) => {
       <td>{product.title}</td>
       <td>{product.rating}</td>
       <td>{product.price}</td>
-      <td><Button variant="primary" onClick={()=>showDetailsHandler(product)}>Show</Button> </td>   
+      <td className="text-center"><Button variant="primary" onClick={()=>showDetailsHandler(product)}>Show</Button> </td>   
                           
     </tr>
     <ProductDetailsModal 

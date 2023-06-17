@@ -58,7 +58,7 @@ const CustomTable = () => {
         >
           <thead>
             <tr>
-              {tableHeaders.map((header,indx)=><th key={indx}>{header}</th>)}
+              {tableHeaders.map((header,indx)=><th key={indx} className={header==='Action' ? 'text-center' : ''}>{header}</th>)}
             </tr>
           </thead>
           
