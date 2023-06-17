@@ -8,30 +8,26 @@ interface ITableRowProps {
 }
 
 const TableRow = ({product}:ITableRowProps) => {
-
   const [modalShow, setModalShow] = useState<boolean>(false);
-
-  const showDetailsHandler = (product:IProduct) => {
-    console.log('showDetailsHandler:',product);
-    setModalShow(true)
-  }
 
   return (
     <>
-    <tr>
-      <td>{product.id}</td>
-      <td>{product.title}</td>
-      <td>{product.rating}</td>
-      <td>{product.price}</td>
-      <td className="text-center"><Button variant="primary" onClick={()=>showDetailsHandler(product)}>Show</Button> </td>   
-                          
-    </tr>
-    <ProductDetailsModal 
-      product={product}
-      modalShow={modalShow}
-      onHide={() => setModalShow(false)} />
+      <tr>
+        <td>{product.id}</td>
+        <td>{product.title}</td>
+        <td>{product.rating}</td>
+        <td>{product.price}</td>
+        <td className="text-center">
+          <Button variant="primary" onClick={()=>setModalShow(true)}>Show</Button> 
+        </td>                   
+      </tr>
+
+      {/* open modal when SHOW btn is clicked */}
+      <ProductDetailsModal 
+        product={product}
+        modalShow={modalShow}
+        onHide={() => setModalShow(false)} />
     </>
-    
   );
 };
 

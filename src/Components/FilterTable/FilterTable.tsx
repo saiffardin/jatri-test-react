@@ -19,8 +19,8 @@ const FilterTable = ({allProducts,setAllProducts,filterColumn}:IFilterTableProps
 
   const dropDownHandler = (eventKey:string|null) => {
     // console.clear();
-    console.log('eventKey:',eventKey)
-    console.log('filterColumn:',filterColumn)
+    // console.log('eventKey:',eventKey)
+    // console.log('filterColumn:',filterColumn)
     
     setFilter(eventKey || DEFAULT)
     const filterProducts : IProduct[] = sortByColumnName(filterColumn,eventKey);
@@ -28,7 +28,6 @@ const FilterTable = ({allProducts,setAllProducts,filterColumn}:IFilterTableProps
   }
 
   const sortByColumnName = (filterColumn:keyof IProduct, sortingOrder:string|null) : IProduct[]  => {
-    
     // console.log('allProducts:',allProducts.map(prod=>({title:prod.title,price:prod.price})))
     // const filterProducts = allProducts.sort((a, b) => (a[filterColumn] as number) - (b[filterColumn] as number));
     // console.log('filterProducts:',filterProducts.map(prod=>({title:prod.title,price:prod.price})))
@@ -47,7 +46,6 @@ const FilterTable = ({allProducts,setAllProducts,filterColumn}:IFilterTableProps
 
   return (
     <div className="filter-table d-flex">
-      {/* style={{'backgroundColor':'grey'}} */}
       <h6 className='my-auto mx-1 text-capitalize'>{filterColumn}</h6>
       <DropdownButton
         variant='success'

@@ -17,65 +17,67 @@ const CustomTable = () => {
   const [currentPage,setCurrentPage] = useState<number>(1)
   const [currentPageProducts,setCurrentPageProducts] = useState<IProduct[]>([])
 
-
   useEffect(() => {
     fetch(getAllProductsUrl())
       .then(res=>res.json())
       .then(data=> setAllProducts(data.products))
-  
   }, [])
 
   useEffect(() => {
-    const indexOfLastProduct   = currentPage * productsPerPage; // 5
-    const indexOfFirstProduct  = indexOfLastProduct - productsPerPage; // 0
+    const indexOfLastProduct   = currentPage * productsPerPage; 
+    const indexOfFirstProduct  = indexOfLastProduct - productsPerPage;
     const currentProducts      = allProducts.slice(indexOfFirstProduct, indexOfLastProduct);
-    console.log('%c=================','color:yellow')
-    console.log('indexOfLastProduct:',indexOfLastProduct)
-    console.log('indexOfFirstProduct:',indexOfFirstProduct)
-    console.log('currentProducts:',currentProducts)
+    // console.log('%c=================','color:yellow')
+    // console.log('indexOfLastProduct:',indexOfLastProduct)
+    // console.log('indexOfFirstProduct:',indexOfFirstProduct)
+    // console.log('currentProducts:',currentProducts)
     setCurrentPageProducts(currentProducts);
 
   }, [allProducts,currentPage])
   
-
-  return (
-    // align-items-center
-    // 
+  return ( 
     <div className='m-2 d-flex align-items-center flex-column'>
 
       <div className='table-parent'>
+
+        {/* Table filter*/}
         <div className='d-flex justify-content-end' >
           <FilterTable allProducts={allProducts} setAllProducts={setAllProducts} filterColumn={filterPriceCol} />
           <div className='mx-4'></div>
           <FilterTable allProducts={allProducts} setAllProducts={setAllProducts} filterColumn={filterRatingCol}/>
         </div>
 
+        {/* main table */}
         <Table 
           className='main-table' 
           responsive="lg" 
           bordered
           hover  
         >
+          {/* table headers */}
           <thead>
             <tr>
-              {tableHeaders.map((header,indx)=><th key={indx} className={header==='Action' ? 'text-center' : ''}>{header}</th>)}
+              {tableHeaders.map((header,indx)=>(
+                <th key={indx} className={header==='Action' ? 'text-center' : ''}>
+                  {header}
+                </th>)
+              )}
             </tr>
           </thead>
           
+          {/* table rows */}
           <tbody>
-            {
-              currentPageProducts.map(product=> <TableRow key={product.id} product={product}/>)
-            }
+            {currentPageProducts.map(product=> <TableRow key={product.id} product={product}/>)}
           </tbody>
         </Table>  
       </div>
 
+      {/* table pagination */}
       <CustomPagination 
           totalPages = {Math.ceil(allProducts.length/productsPerPage)}
           currentPage = {currentPage}
           setCurrentPage = {setCurrentPage}
         />
-      
     </div>
   );
 };
